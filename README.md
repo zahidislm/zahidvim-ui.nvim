@@ -34,7 +34,7 @@ Install the plugin with your preferred package manager:
 
 ```lua
 return {
-    "zahidislm/ZahidvimUI",
+    "zahidislm/zahidvim-ui.nvim",
     dependencies = {
         "rebelot/heirline.nvim",
 
