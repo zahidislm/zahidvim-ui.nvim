@@ -1,5 +1,3 @@
-local config = require("zahidvim-ui.config")
-
 local M = {}
 
 local highlights = {
@@ -40,7 +38,8 @@ local mode_colors = {
 M.setup_highlights = function(colors)
 	colors = colors or highlights
 
-	if config.get("statusline").enable_autocmds then
+	local config = vim.g.ui_config
+	if config.statusline.enable_autocmds then
 		require("zahidvim-ui.components.statusline.utils.autocmds").setup(colors)
 	end
 

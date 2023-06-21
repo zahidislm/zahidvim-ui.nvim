@@ -25,17 +25,4 @@ function M.setup(options)
 	return M.options
 end
 
----@param key? string
-function M.get(key)
-	if not M.options then
-		error("[Zahidvim UI] not initialized")
-	end
-
-	if key then
-		return M.options[key]
-	else
-		return nil
-	end
-end
-
 return M

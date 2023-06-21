@@ -1,5 +1,4 @@
 local M = {}
-local config = require("zahidvim-ui.config")
 
 local listchar_icons = {
 	listchars = {
@@ -97,6 +96,7 @@ local nerdfont_icons = {
 
 local function setup_listchars(icons)
 	icons = type(icons) == "table" and icons or {}
+
 	local listchars = {}
 
 	if next(icons.listchars) then
@@ -107,16 +107,17 @@ local function setup_listchars(icons)
 end
 
 function M.setup()
-	local override = config.get("ui").icons.override or {}
+	local config = vim.g.ui_config
+	local override = config.ui.icons.override or {}
 	local icons = unicode_icons
 
-	if config.get("ui").icons.enable_nerdfont then
+	if config.ui.icons.enable_nerdfont then
 		icons = nerdfont_icons
 	end
 
 	M.icon_set = vim.tbl_deep_extend("force", icons, listchar_icons, override)
 
-	if config.get("ui").icons.setup_listchars then
+	if config.ui.icons.setup_listchars then
 		setup_listchars(M.icon_set)
 	end
 

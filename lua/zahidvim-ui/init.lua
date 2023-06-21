@@ -1,17 +1,16 @@
 local M = {}
-local config = require("zahidvim-ui.config")
-local icons = require("zahidvim-ui.icons")
 
 function M.setup(opts)
 	opts = type(opts) == "table" and opts or {}
 
-	config.setup(opts)
-	icons.setup()
+	vim.g.ui_config = require("zahidvim-ui.config").setup(opts)
+	vim.g.ui_icons = require("zahidvim-ui.icons").setup()
 
 	local heirline_installed, heirline = pcall(require, "heirline")
 
 	if heirline_installed then
-		heirline.setup(require("zahidvim-ui.components"))
+		local heirline_opts = require("zahidvim-ui.components").setup()
+		heirline.setup(heirline_opts)
 		require("zahidvim-ui.highlights").setup()
 	else
 		local msg =

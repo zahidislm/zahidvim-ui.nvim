@@ -1,6 +1,4 @@
-local utils = require("heirline.utils")
 local M = {}
-
 local statusline_bg = "#bebebe"
 
 if vim.o.background == "dark" then
@@ -29,6 +27,7 @@ local highlights = {
 function M.setup()
 	for key, value in pairs(highlights) do
 		local hl_name = "Heirline" .. key
+		local utils = require("heirline.utils")
 		local custom_hl = utils.get_highlight(hl_name)
 
 		if not custom_hl then

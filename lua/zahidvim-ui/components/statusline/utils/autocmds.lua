@@ -1,7 +1,5 @@
 local M = {}
 
-local utils = require("heirline.utils")
-
 M.setup = function(highlights)
 	highlights = highlights or {}
 
@@ -9,7 +7,7 @@ M.setup = function(highlights)
 		vim.api.nvim_create_augroup("Heirline", { clear = true })
 		vim.api.nvim_create_autocmd("ColorScheme", {
 			callback = function()
-				utils.on_colorscheme(highlights)
+				require("heirline.utils").on_colorscheme(highlights)
 			end,
 			group = "Heirline",
 		})
