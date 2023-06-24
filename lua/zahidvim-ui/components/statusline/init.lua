@@ -43,7 +43,7 @@ function M.setup(conds, get_hl_func)
 			self.mode_color = self.mode_colors[self.mode:sub(1, 1)]
 		end,
 		update = {
-			"ModeChanged",
+			{ "ModeChanged", "TermClose" },
 			pattern = "*:*",
 			callback = vim.schedule_wrap(function()
 				vim.cmd("redrawstatus")
