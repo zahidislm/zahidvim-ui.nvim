@@ -135,7 +135,13 @@ function M.setup(conds, get_hl_func)
 						if telescope_installed then
 							telescope.git_status({ bufnr = 0 })
 						else
-							require("gitsigns").setqflist()
+							local fzf_installed, fzf = pcall(require, "fzf-lua")
+
+							if fzf_installed then
+								fzf.git_status()
+							else
+								require("gitsigns").setqflist()
+							end
 						end
 					end,
 					name = "heirline_git_status",
@@ -206,7 +212,13 @@ function M.setup(conds, get_hl_func)
 						bufnr = 0,
 					})
 				else
-					vim.diagnostic.setqflist()
+					local fzf_installed, fzf = pcall(require, "fzf-lua")
+
+					if fzf_installed then
+						fzf.diagnostics_document()
+					else
+						vim.diagnostic.setqflist()
+					end
 				end
 			end,
 			name = "heirline_diagnostics",
