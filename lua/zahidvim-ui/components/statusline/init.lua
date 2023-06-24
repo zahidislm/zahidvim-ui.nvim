@@ -44,7 +44,6 @@ function M.setup(conds, get_hl_func)
 		end,
 		update = {
 			"ModeChanged",
-			"TermLeave",
 			pattern = "*:*",
 			callback = vim.schedule_wrap(function()
 				vim.cmd("redrawstatus")
