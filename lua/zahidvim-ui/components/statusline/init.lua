@@ -42,13 +42,6 @@ function M.setup(conds, get_hl_func)
 			self.mode = vim.fn.mode(1)
 			self.mode_color = self.mode_colors[self.mode:sub(1, 1)]
 		end,
-		update = {
-			"ModeChanged",
-			pattern = "*:*",
-			callback = vim.schedule_wrap(function()
-				vim.cmd("redrawstatus")
-			end),
-		},
 		static = {
 			mode_names = {
 				n = "NORMAL",
