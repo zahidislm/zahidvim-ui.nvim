@@ -54,29 +54,83 @@ return {
 
 ### Setup
 
-ZahidvimUI comes with the following defaults:
+ZahidvimUI comes with the following default settings below:
+
+<details><summary>Default Settings</summary>
+
+<!-- config:start -->
 
 ```lua
 {
-    ui = {
+    globals = {
         icons = {
             enable_nerdfont = false,
             enable_devicons = false,
-            override = nil, -- any custom icons passed here
+            override = nil,
             setup_listchars = true,
         },
     },
+    ui = {
+        statusline = {
+            enabled = true,
+            enable_autocmds = true,
+            components = {
+                mode = {
+                    enabled = true,
+                },
+                git = {
+                    enabled = true,
+                },
+                diagnostics = {
+                    enabled = true,
+                },
+                lsp = {
+                    enabled = true,
+                },
+                macro = {
+                    enabled = true,
+                },
+                search = {
+                    enabled = true,
+                },
+                filetype = {
+                    enabled = true,
+                },
+                ruler = {
+                    enabled = true,
+                },
+            },
+        },
 
-    statusline = {
-        enabled = true,
-        enable_autocmds = true,
+        statuscolumn = {
+            enabled = true,
+                components = {
+                git = {
+                    enabled = true,
+                },
+                diagnostics = {
+                    enabled = true,
+                },
+                line_number = {
+                    enabled = true,
+                },
+                fold_indicator = {
+                    enabled = true,
+                },
+            },
+        },
     },
 
-    statuscolumn = {
-        enabled = true,
+    highlights = {
+        enable_fallback = true,
     },
 }
 ```
+
+<!-- config:end -->
+
+</details>
+
 ## 🎨 Colors
 
 The table below shows all the highlight groups defined for ZahidvimUI.
@@ -99,6 +153,11 @@ The table below shows all the highlight groups defined for ZahidvimUI.
 | _HeirlineDiagInfo_       |
 | _HeirlineRuler_          |
 | _HeirlineMacro_          |
+| _HeirlineMagenta_        |
+| _HeirlineGreen_          |
+| _HeirlineOrange_         |
+| _HeirlineYellow_         |
+| _HeirlineRed_            |
 
 ## 🙏 Credits
 
