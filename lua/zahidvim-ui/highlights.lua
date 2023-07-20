@@ -1,9 +1,5 @@
 local M = {}
-local statusline_bg = "#bebebe"
-
-if vim.o.background == "dark" then
-	statusline_bg = "#2e323b"
-end
+local statusline_bg = vim.o.background == "dark" and "#2e323b" or "#bebebe"
 
 local highlights = {
 	Slant = { fg = statusline_bg, bg = "bg" },
@@ -24,14 +20,32 @@ local highlights = {
 	Macro = { fg = "bg", bg = "blue" },
 }
 
+local function get_hlgroup(name, fallback)
+	name = type(name) == "string" and name or ""
+	fallback = type(fallback) == "table" and fallback or {}
+
+	local use_fallback = true
+
+	if vim.fn.hlexists(name) == 1 then
+		use_fallback = false
+
+		local hl = vim.api.nvim_get_hl(0, { name = name, link = false })
+		hl.fg = not hl.fg and "NONE" or hl.fg
+		hl.bg = not hl.bg and "NONE" or hl.bg
+
+		return hl, use_fallback
+	end
+
+	return fallback, use_fallback
+end
+
 function M.setup()
 	for key, value in pairs(highlights) do
 		local hl_name = "Heirline" .. key
-		local utils = require("heirline.utils")
-		local custom_hl = utils.get_highlight(hl_name)
+		local hl_group, use_fallback = get_hlgroup(hl_name, value)
 
-		if not custom_hl then
-			vim.api.nvim_command("hi def link " .. hl_name .. " " .. value)
+		if use_fallback then
+			vim.api.nvim_set_hl(0, hl_name, hl_group)
 		end
 	end
 end

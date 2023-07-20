@@ -18,10 +18,40 @@ local unicode_icons = {
 		Hint = "Ⓗ ",
 	},
 
+	symbol_map = {
+		Text = "",
+		Method = "",
+		Function = "",
+		Constructor = "",
+		Field = "",
+		Variable = "",
+		Class = "",
+		Interface = "",
+		Module = "",
+		Property = "",
+		Unit = "",
+		Value = "",
+		Enum = "",
+		Keyword = "",
+		Snippet = "",
+		Color = "",
+		File = "",
+		Reference = "",
+		Folder = "",
+		EnumMember = "",
+		Constant = "",
+		Struct = "",
+		Event = "",
+		Operator = "",
+		TypeParameter = "",
+		Copilot = "",
+		Codeium = "",
+	},
+
 	git = {
 		status_added = "⊕ ",
 		status_removed = "⊖ ",
-		status_modified = "⊙ ",
+		status_changed = "⊙ ",
 		added = "＋",
 		deleted = "ｘ",
 		modified = "⚬",
@@ -45,6 +75,7 @@ local unicode_icons = {
 		collapsed = "> ",
 		expanded = "∨ ",
 		condense = "⇞ ",
+		border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
 		v_border = "│ ",
 		select = "▶ ",
 		prompt = "⌕ ",
@@ -60,10 +91,40 @@ local nerdfont_icons = {
 		Hint = " ",
 	},
 
+	symbol_map = {
+		Text = "",
+		Method = "",
+		Function = "",
+		Constructor = "",
+		Field = "",
+		Variable = "",
+		Class = "",
+		Interface = "",
+		Module = "",
+		Property = "",
+		Unit = "",
+		Value = "",
+		Enum = "",
+		Keyword = "",
+		Snippet = "",
+		Color = "",
+		File = "",
+		Reference = "",
+		Folder = "",
+		EnumMember = "",
+		Constant = "",
+		Struct = "",
+		Event = "",
+		Operator = "",
+		TypeParameter = "",
+		Copilot = "",
+		Codeium = "󰘦",
+	},
+
 	git = {
 		status_added = " ",
 		status_removed = " ",
-		status_modified = " ",
+		status_changed = " ",
 		added = " ",
 		deleted = " ",
 		modified = " ",
@@ -87,7 +148,6 @@ local nerdfont_icons = {
 		collapsed = " ",
 		expanded = " ",
 		condense = "󰡍 ",
-		v_border = "│ ",
 		select = " ",
 		prompt = " ",
 		next_line = "󰌑 ",
@@ -97,27 +157,18 @@ local nerdfont_icons = {
 local function setup_listchars(icons)
 	icons = type(icons) == "table" and icons or {}
 
-	local listchars = {}
-
-	if next(icons.listchars) then
-		listchars = icons.listchars
-	end
-
+	local listchars = next(icons.listchars) and icons.listchars or {}
 	vim.opt.listchars:append(listchars)
 end
 
 function M.setup()
-	local config = vim.g.ui_config
-	local override = config.ui.icons.override or {}
-	local icons = unicode_icons
+	local config = require("zahidvim-ui.config")
+	local override = config.options.globals.icons.override or {}
+	local enabled_icons = config.options.globals.icons.enable_nerdfont and nerdfont_icons or {}
 
-	if config.ui.icons.enable_nerdfont then
-		icons = nerdfont_icons
-	end
+	M.icon_set = vim.tbl_deep_extend("force", unicode_icons, enabled_icons, listchar_icons, override)
 
-	M.icon_set = vim.tbl_deep_extend("force", icons, listchar_icons, override)
-
-	if config.ui.icons.setup_listchars then
+	if config.options.globals.icons.setup_listchars then
 		setup_listchars(M.icon_set)
 	end
 

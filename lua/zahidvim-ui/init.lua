@@ -1,17 +1,19 @@
-local M = {}
+local zahidislm_ui = {}
+local config = require("zahidvim-ui.config")
 
-function M.setup(opts)
+function zahidislm_ui.setup(opts)
 	opts = type(opts) == "table" and opts or {}
 
-	vim.g.ui_config = require("zahidvim-ui.config").setup(opts)
+	config.setup(opts)
 	vim.g.ui_icons = require("zahidvim-ui.icons").setup()
 
 	local heirline_installed, heirline = pcall(require, "heirline")
-
 	if heirline_installed then
-		local heirline_opts = require("zahidvim-ui.components").setup()
+		local heirline_opts = require("zahidvim-ui.modules").setup()
 		heirline.setup(heirline_opts)
-		require("zahidvim-ui.highlights").setup()
+		if config.options.highlights.enable_fallback then
+			require("zahidvim-ui.highlights").setup()
+		end
 	else
 		local msg =
 			"UI requires 'heirline.nvim' to run. Please add 'heirline.nvim' as a dependancy or install it normally before running UI."
@@ -19,4 +21,4 @@ function M.setup(opts)
 	end
 end
 
-return M
+return zahidislm_ui
